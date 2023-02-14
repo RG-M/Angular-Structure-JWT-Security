@@ -1,0 +1,65 @@
+.sidenav {
+  width: 250px;
+}
+
+.active-list-item {
+  color: #737373;
+  background-color: #dddddd !important;
+}
+
+mat-toolbar button {
+  background: none;
+  border: 0;
+  display: flex;
+  outline: none;
+}
+
+mat-toolbar mat-icon {
+  color: white;
+}
+mat-toolbar{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10000;
+}
+
+mat-sidenav-container {
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+mat-sidenav{
+  position: fixed;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+}
+
+mat-sidenav-content{
+  padding: 20px ;
+  background-color: white;
+}
+
+// Custom Scroll Bar FOr fun 
+/* width */
+::-webkit-scrollbar {
+  width: 30px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: #a80909; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(210, 127, 127); 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(119, 13, 13); 
+}
