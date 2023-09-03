@@ -17,6 +17,9 @@ export class FullLayoutComponent {
     );
   constructor(private breakpointObserver: BreakpointObserver){}
 
+  logout(){
+    
+  }
 
 
 }

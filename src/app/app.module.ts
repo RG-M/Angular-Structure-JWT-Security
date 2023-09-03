@@ -12,6 +12,10 @@ import {MatListModule} from '@angular/material/list';
 import { FullLayoutV2Component } from './layouts/full-layout-v2/full-layout-v2.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './shared/material.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthGuardGuard } from './guards/auth-guard.guard';
+import { TokenInterceptor } from './interceptors/token.interceptor';
+import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 
 
@@ -27,13 +31,19 @@ import { MaterialModule } from './shared/material.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    JwtModule
   ],
-  providers: [],
+  providers: [AuthGuardGuard,
+              {provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},
+              { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+              JwtHelperService
+            ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

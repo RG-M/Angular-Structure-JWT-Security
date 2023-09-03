@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,12 +12,17 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   hide = true;
 
-  constructor(private router: Router,private _snackBar: MatSnackBar) { }
+  constructor(private router: Router,
+              private _snackBar: MatSnackBar,
+              private authService:AuthService) { }
 
   loginForm: FormGroup = new FormGroup({
-    email: new FormControl(null, [Validators.email,Validators.required]),
+    email: new FormControl(null, [
+      //Validators.email,Validators.required
+    ]),
     password: new FormControl(null, [
-      Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}'),Validators.required])
+      //Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}'),Validators.required
+    ])
   });
 
   getErrorMessagePassword() {
@@ -34,7 +40,22 @@ export class LoginComponent {
       this._snackBar.open("Error")
       return;
     }
+    else{
+      let email = this.loginForm.controls['email'].value;
+      let password = this.loginForm.controls['password'].value;
+
+      this.authService.login(email,password)
+      .subscribe({
+        next:(res)=>{
+          console.log(res);
+          localStorage.setItem('key', res.token);
+          localStorage.setItem('refreshToken', res.refreshToken);
+          this.router.navigate(['home']);
+        },
+        error:(err)=>{console.log("ops",err)},
+        complete:()=>{console.log("done");}
+      })
+    }
     
-    this.router.navigate(['home']);
   }
 }
